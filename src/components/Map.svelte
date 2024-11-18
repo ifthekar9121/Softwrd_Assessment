@@ -12,12 +12,12 @@
     import { Circle as CircleStyle, Fill, Stroke, Style } from 'ol/style';
     import {Popover, Button, Chart} from 'flowbite-svelte';
 
-    export let filteredPads;
+    let { filteredPads } = $props();
 
-    let map;
-    let vectorSource;
-    let vectorLayer;
-    let selectedFeature = null;
+    let map = $state();
+    let vectorSource = $state();
+    let vectorLayer = $state();
+    let selectedFeature = $state(null);
 
     function calculateCenter(pads) {
         if (pads.length === 0) return [0, 0];
@@ -68,11 +68,9 @@
         }
     }
 
-    $: {
-        if (vectorSource) {
-            updateMapFeatures(filteredPads);
-        }
-    }
+    $effect(() => {
+        updateMapFeatures(filteredPads);
+    });
 
     onMount(() => {
         vectorSource = new VectorSource();

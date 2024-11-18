@@ -3,7 +3,6 @@
     import Grid from './Grid.svelte';
     import Map from './Map.svelte';
     import Donut from './Donut.svelte';
-    import { onMount, onDestroy } from 'svelte';
     import {
         Dropdown,
         DropdownItem,
@@ -14,26 +13,26 @@
     } from 'flowbite-svelte';
     import { ListOutline, GridOutline, ChevronDownOutline, AdjustmentsVerticalOutline, LinkOutline } from 'flowbite-svelte-icons';
 
-    export let data;
+    let { data } = $props();
     const landingPads = data.data;
-    let selectedStatus = "all";
+    let selectedStatus = $state("all");
 
-    $: uniqueStatuses = ["all", ...new Set(landingPads.map((pad) => pad.status))];
+    const uniqueStatuses = $derived(["all", ...new Set(landingPads.map((pad) => pad.status))]);
 
     function handleStatusChange(event) {
         selectedStatus = event.target.value;
     }
 
-    $: filteredPads = selectedStatus === "all"
+    const  filteredPads = $derived(selectedStatus === "all"
         ? landingPads
-        : landingPads.filter((pad) => pad.status === selectedStatus);
+        : landingPads.filter((pad) => pad.status === selectedStatus));
 
-    let isOpen = false;
+    let isOpen = $state(false);
     function toggleDropdown() {
         isOpen = !isOpen;
     }
 
-    let viewMode = "list";
+    let viewMode = $state("list");
 
     function toggleViewMode(mode) {
         viewMode = mode;
@@ -46,16 +45,16 @@
         <div class="col-span-4 lg:col-span-3">
             <div class="flex mb-2">
                 <div class="flex border border-gray-200 rounded-md">
-                    <button class="flex p-2.5 border-r border-gray-200 {viewMode === 'list' ? 'active-element' : 'btn-element'}" on:click={() => toggleViewMode("list")}>
+                    <button class="flex p-2.5 border-r border-gray-200 {viewMode === 'list' ? 'active-element' : 'btn-element'}" onclick={() => toggleViewMode("list")}>
                         <ListOutline class="size-4"/>
                     </button>
-                    <button class="flex p-2.5 {viewMode === 'grid' ? 'active-element' : 'btn-element'}" on:click={() => toggleViewMode("grid")}>
+                    <button class="flex p-2.5 {viewMode === 'grid' ? 'active-element' : 'btn-element'}" onclick={() => toggleViewMode("grid")}>
                         <GridOutline class="size-4"/>
                     </button>
                 </div>
                 
                 <div class="flex ml-auto relative">
-                    <Button class="w-52 p-2.5 capitalize text-sm border border-gray 200 text-gray-800 rounded-md bg-gray-200 btn-element {isOpen ? "active-element" : ""}" on:click={toggleDropdown}><AdjustmentsVerticalOutline class="me-2 size-4"/> {selectedStatus === "all"
+                    <Button class="w-52 p-2.5 capitalize text-sm border border-gray 200 text-gray-800 rounded-md bg-gray-200 btn-element {isOpen ? "active-element" : ""}" onclick={toggleDropdown}><AdjustmentsVerticalOutline class="me-2 size-4"/> {selectedStatus === "all"
                         ? "Filter By  Status" : selectedStatus}<ChevronDownOutline class="size-4 ms-2" style="transform: rotate({isOpen ? 180 : 0}deg);"/></Button>
                     <Dropdown class="absolute -ml-24 z-10 bg-white border border-gray-200 rounded-md shadow-lg w-48">
                         {#each uniqueStatuses as status}
@@ -80,7 +79,7 @@
             {/if}
         </div>
         <div class="col-span-4 lg:col-span-1">
-            <div class="grid sm:grid-cols-2 lg:grid-cols-1  gap-4">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-1 gap-4">
                 <div class="card-components rounded-lg">
                     <Map {filteredPads}/>
                 </div>

@@ -13,11 +13,11 @@
     import { successRate } from '$lib';
     import { LinkOutline } from 'flowbite-svelte-icons';
 
-    let clickOutsideModal = false;
-    let size = 'sm';
-    let selectedPad = null;
+    let clickOutsideModal = $state(false);
+    let size = $state('sm');
+    let selectedPad = $state(null);
 
-    export let filteredPads;
+    let { filteredPads } = $props();
 </script>
 
 <Table class="border capitalize font-semibold text-sm text-gray-900">
@@ -37,8 +37,7 @@
                 <TableBodyCell>{row.location.name}</TableBodyCell>
                 <TableBodyCell>{row.location.region}</TableBodyCell>
                 <TableBodyCell>
-                    <Button
-                        class="text-xs text-gray-900 px-1.5 py-0.5 rounded-md bg-gray-100"
+                    <Button class="hover:text-white text-xs text-gray-900 px-1.5 py-0.5 rounded-md bg-gray-100"
                         on:click={() => {
                             selectedPad = row;
                             clickOutsideModal = true;
@@ -61,12 +60,7 @@
                     </a>
                 </TableBodyCell>
                 <TableBodyCell>
-                    <p 
-                        class="py-0.5 px-1.5 font-medium rounded-md inline" 
-                        class:status-retired={row.status === 'retired'} 
-                        class:status-active={row.status === 'active'} 
-                        class:status-under-construction={row.status !== 'retired' && row.status !== 'active'}
-                    >
+                    <p class="py-0.5 px-1.5 font-medium rounded-md inline {row.status === 'retired'? 'status-retired' : row.status === 'active' ? 'status-active' : 'status-under-construction'}">
                         {row.status}
                     </p>
                 </TableBodyCell>
