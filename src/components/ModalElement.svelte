@@ -1,6 +1,6 @@
 <script>
-    import { Modal } from 'flowbite-svelte';
-    
+    import { Modal } from "flowbite-svelte";
+
     let { selectedPad, size, clickOutsideModal = $bindable() } = $props();
 </script>
 

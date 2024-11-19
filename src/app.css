@@ -2,54 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
+* {
   font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
 }
-.card-components{
+
+.card-components {
   border: 1px solid #e5e7eb;
   box-shadow: 0px 4px 6px -1px #0000001A;
 }
-.card-components-header{
+
+.card-components-header {
   box-shadow: 0px 1px 3px 0px #0000001A;
 }
+
 .map {
   width: 100%;
   height: 320px;
   border-radius: 0.5rem
 }
-.map .ol-viewport{
+
+.map .ol-viewport {
   border-radius: 0 0 0.5rem 0.5rem
 }
+
 .btn-element:hover {
   background: #EBEDF0 !important;
   color: #1C64F2;
 }
-.btn-filter:hover{
+
+.btn-filter:hover {
   background: #EBEDF0 !important;
   color: #1C64F2;
 }
-.active-element{
+
+.active-element {
   background: #EBEDF0;
   color: #1C64F2;
 }
-.status-active{
+
+.status-active {
   color: #03543f;
   font-size: 12px;
   background: #def7ec;
 }
-.status-retired{
+
+.status-retired {
   color: #9b1c1c;
   font-size: 12px;
   background: #fde8e8;
 }
-.status-under-construction{
+
+.status-under-construction {
   color: #1e429f;
   font-size: 12px;
   background: #e1effe;
 }
+
 table th,
-table td{
+table td {
   padding: 1rem !important;
 }

@@ -3,4 +3,4 @@
     export let data;
 </script>
 
-<Main {data}/>
+<Main {data} />

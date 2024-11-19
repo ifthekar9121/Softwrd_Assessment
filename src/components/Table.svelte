@@ -1,6 +1,6 @@
 <script>
-    import ModalElement from './ModalElement.svelte';
-    import { 
+    import ModalElement from "./ModalElement.svelte";
+    import {
         Button,
         Progressbar,
         Table,
@@ -8,13 +8,13 @@
         TableBodyCell,
         TableBodyRow,
         TableHead,
-        TableHeadCell
-    } from 'flowbite-svelte';
-    import { successRate } from '$lib';
-    import { LinkOutline } from 'flowbite-svelte-icons';
+        TableHeadCell,
+    } from "flowbite-svelte";
+    import { successRate } from "$lib";
+    import { LinkOutline } from "flowbite-svelte-icons";
 
     let clickOutsideModal = $state(false);
-    let size = $state('sm');
+    let size = $state("sm");
     let selectedPad = $state(null);
 
     let { filteredPads } = $props();
@@ -37,8 +37,9 @@
                 <TableBodyCell>{row.location.name}</TableBodyCell>
                 <TableBodyCell>{row.location.region}</TableBodyCell>
                 <TableBodyCell>
-                    <Button class="hover:text-white text-xs text-gray-900 px-1.5 py-0.5 rounded-md bg-gray-100"
-                        on:click={() => {
+                    <Button
+                        class="hover:text-white text-xs text-gray-900 px-1.5 py-0.5 rounded-md bg-gray-100"
+                        onclick={() => {
                             selectedPad = row;
                             clickOutsideModal = true;
                         }}
@@ -50,17 +51,35 @@
                     {#if row.successful_landings == 0 || row.attempted_landings == 0}
                         N/A
                     {:else}
-                        <Progressbar progress={successRate(row.successful_landings, row.attempted_landings)} shadow="#ffffff" color="green" size="h-1.5" />
-                        {successRate(row.successful_landings, row.attempted_landings)}%
+                        <Progressbar
+                            progress={successRate(
+                                row.successful_landings,
+                                row.attempted_landings,
+                            )}
+                            shadow="#ffffff"
+                            color="green"
+                            size="h-1.5"
+                        />
+                        {successRate(
+                            row.successful_landings,
+                            row.attempted_landings,
+                        )}%
                     {/if}
                 </TableBodyCell>
                 <TableBodyCell class="text-primary-600">
-                    <a href="{row.wikipedia}" target="_blank">
+                    <a href={row.wikipedia} target="_blank">
                         <LinkOutline />
                     </a>
                 </TableBodyCell>
                 <TableBodyCell>
-                    <p class="py-0.5 px-1.5 font-medium rounded-md inline {row.status === 'retired'? 'status-retired' : row.status === 'active' ? 'status-active' : 'status-under-construction'}">
+                    <p
+                        class="py-0.5 px-1.5 font-medium rounded-md inline {row.status ===
+                        'retired'
+                            ? 'status-retired'
+                            : row.status === 'active'
+                              ? 'status-active'
+                              : 'status-under-construction'}"
+                    >
                         {row.status}
                     </p>
                 </TableBodyCell>
